@@ -1,27 +1,35 @@
 import { useState } from 'react';
 import { SearchForm, Input, Button } from './SearchForm.styled';
 
-const Form = ({ searchMovies }) => {
-  const [query, setQuery] = useState();
+import { Toaster, toast } from 'react-hot-toast';
 
-  const handleSubmit = evt => {
-    evt.preventDefault();
-    searchMovies(query.toLowerCase());
+const Form = ({ value, onSubmit }) => {
+  const [query, setQuery] = useState(value);
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (query.trim() === '') {
+      toast.error('Sorry, enter something in search line.');
+      return;
+    }
+    onSubmit(query);
   };
-  const handleInputSearch = evt => {
-    setQuery(evt.target.value);
+
+  const handleInputChange = e => {
+    setQuery(e.currentTarget.value);
   };
 
   return (
     <SearchForm onSubmit={handleSubmit}>
+      <Toaster />
       <Input
         type="text"
-        name="query"
-        autoFocus
+        // debounceTimeout={500}
         value={query}
-        onChange={handleInputSearch}
-      ></Input>
-      <Button type="button">Search</Button>
+        onChange={handleInputChange}
+        placeholder="Please enter your query"
+      />
+      <Button type="submit">Search</Button>
     </SearchForm>
   );
 };

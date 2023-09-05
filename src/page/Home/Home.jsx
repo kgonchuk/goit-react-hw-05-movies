@@ -1,14 +1,39 @@
-import { useEffect, useState } from 'react';
-import { getTrendingMovies } from '../../services/API';
 import MoviesList from '../MoviesList/MoviesList';
-import { useLocation } from 'react-router';
+import Loader from 'components/Loader/Loader';
+import { getTrendingMovies } from '../../services/API';
+
+import { useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const Home = () => {
-  const location = useLocation;
   const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const location = useLocation();
+
   useEffect(() => {
-    getTrendingMovies().then(data => setMovies(data.results), []);
-  });
-  return <MoviesList movies={movies} location={location} />;
+    const getTrending = () => {
+      setIsLoading(true);
+      getTrendingMovies()
+        .then(trendingFilms => {
+          setMovies(trendingFilms);
+        })
+        .catch(error => {
+          console.log(error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    };
+    getTrending();
+  }, []);
+
+  return (
+    <main>
+      <h1>Trending today</h1>
+      <MoviesList films={movies} location={location} />
+
+      {isLoading && <Loader />}
+    </main>
+  );
 };
 export default Home;
