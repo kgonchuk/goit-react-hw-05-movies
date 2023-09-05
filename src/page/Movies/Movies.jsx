@@ -10,7 +10,7 @@ import toast, { Toaster } from 'react-hot-toast';
 const Movies = () => {
   const [searchFilms, setSearchFilms] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query') ?? '';
 
@@ -42,7 +42,7 @@ const Movies = () => {
   return (
     <main>
       <Toaster />
-      {error && toast.error('Sorry, something went wrong. Pleae, try again')}
+      {/* {error && toast.error('Sorry, something went wrong. Pleae, try again')} */}
 
       <Form value={query} onSubmit={updateQueryString} />
       {isLoading && <Loader />}
