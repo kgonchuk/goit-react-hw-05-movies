@@ -1,5 +1,6 @@
-import { List, Card } from './MoviesList.styled';
+import { List, Card, Title } from './MoviesList.styled';
 import { Link, useLocation } from 'react-router-dom';
+import { getPoster } from '../../services/plaseHolder';
 const MoviesList = ({ films }) => {
   const location = useLocation();
 
@@ -8,7 +9,12 @@ const MoviesList = ({ films }) => {
       {films.map(film => (
         <Card key={film.id}>
           <Link to={`/movies/${film.id}`} state={{ from: location }}>
-            {film.title}
+            <img
+              src={getPoster(film.poster_path)}
+              width={250}
+              alt={film.original_title}
+            />
+            <Title>{film.title}</Title>
           </Link>
         </Card>
       ))}

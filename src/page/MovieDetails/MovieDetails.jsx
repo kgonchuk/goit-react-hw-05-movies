@@ -2,14 +2,14 @@ import { getMovieDetails } from '../../services/API';
 import Loader from '../../components/Loader/Loader';
 import { getPoster } from '../../services/plaseHolder';
 
-import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
 import {
   Container,
   List,
   ListInfo,
   LinkInfo,
-  Button,
+  GoBackLink,
 } from './MovieDetails.styled';
 
 const MovieDetails = () => {
@@ -17,6 +17,8 @@ const MovieDetails = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [movieInfo, setMovieInfo] = useState(null);
   const location = useLocation();
+
+  const goBackHref = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
     const movieDetails = () => {
@@ -47,9 +49,8 @@ const MovieDetails = () => {
 
   return (
     <>
-      <Link to={location.state?.from ?? '/'}>
-        <Button type="button">Go back</Button>
-      </Link>
+      <GoBackLink to={goBackHref.current}>Go Back</GoBackLink>
+
       {isLoading && <Loader />}
       {movieInfo && (
         <Container>

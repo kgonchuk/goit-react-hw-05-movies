@@ -35,7 +35,7 @@ export const LinkInfo = styled(Link)`
     color: tomato;
   }
 `;
-export const Button = styled.button`
+export const GoBackLink = styled(Link)`
   padding: 8px 8px;
   font: inherit;
   cursor: pointer;

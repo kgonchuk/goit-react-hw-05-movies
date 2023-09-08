@@ -15,7 +15,7 @@ const Movies = () => {
   const query = searchParams.get('query') ?? '';
 
   useEffect(() => {
-    if (query) fetchMovieByWord();
+    if (!query) return;
     async function fetchMovieByWord() {
       setIsLoading(true);
       try {
@@ -30,6 +30,7 @@ const Movies = () => {
         setIsLoading(false);
       }
     }
+    fetchMovieByWord();
   }, [query]);
   const updateQueryString = searchQuery => {
     if (searchQuery === query) {

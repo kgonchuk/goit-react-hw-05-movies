@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 const Home = () => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const location = useLocation();
+  // const location = useLocation();
 
   useEffect(() => {
     const getTrending = () => {
@@ -30,7 +30,7 @@ const Home = () => {
   return (
     <main>
       <h1>Trending today</h1>
-      <MoviesList films={movies} location={location} />
+      <MoviesList films={movies} />
 
       {isLoading && <Loader />}
     </main>
